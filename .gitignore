@@ -1,0 +1,13 @@
+*.pdf
+*.xlsx
+*.xls
+*.xltx
+*.csv
+*.jpeg
+*.jpg
+*.png
+__pycache__/
+*.pyc
+dashboard/static/uploads/
+~$*
+.DS_Store

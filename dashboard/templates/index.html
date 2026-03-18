@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Fanbuff Finance Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f4f8;color:#1a1a2e;min-height:100vh}
+
+/* NAV */
+.nav{background:#1B3A6B;padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.nav-brand{color:#fff;font-size:17px;font-weight:700;letter-spacing:.5px}
+.nav-brand span{color:#E8A020}
+.nav-actions{display:flex;gap:10px;align-items:center}
+.nav-file-count{color:#a0b8d8;font-size:13px}
+
+/* UPLOAD ZONE */
+.upload-section{padding:32px 28px 0}
+.drop-zone{border:2px dashed #2E5FA3;border-radius:12px;background:#fff;padding:36px;text-align:center;cursor:pointer;transition:.2s;position:relative}
+.drop-zone:hover,.drop-zone.over{border-color:#E8A020;background:#fffbf3}
+.drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop-icon{font-size:40px;margin-bottom:12px}
+.drop-text{font-size:15px;color:#2E5FA3;font-weight:600}
+.drop-sub{font-size:13px;color:#888;margin-top:6px}
+.upload-btn{background:#1B3A6B;color:#fff;border:none;padding:10px 28px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;margin-top:14px;transition:.2s}
+.upload-btn:hover{background:#2E5FA3}
+.upload-status{margin-top:12px;font-size:13px;color:#555}
+
+/* KPI CARDS */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;padding:24px 28px}
+.kpi{background:#fff;border-radius:12px;padding:20px 22px;box-shadow:0 1px 4px rgba(0,0,0,.08);border-left:4px solid #2E5FA3}
+.kpi.red{border-left-color:#C0392B}
+.kpi.green{border-left-color:#1A7A4A}
+.kpi.orange{border-left-color:#E8A020}
+.kpi-label{font-size:12px;color:#888;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+.kpi-value{font-size:26px;font-weight:800;margin-top:6px;color:#1B3A6B}
+.kpi.red .kpi-value{color:#C0392B}
+.kpi.green .kpi-value{color:#1A7A4A}
+.kpi.orange .kpi-value{color:#E8A020}
+.kpi-sub{font-size:11px;color:#aaa;margin-top:4px}
+
+/* CHARTS */
+.charts-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;padding:0 28px}
+@media(max-width:900px){.charts-grid{grid-template-columns:1fr}}
+.card{background:#fff;border-radius:12px;padding:22px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.card-title{font-size:14px;font-weight:700;color:#1B3A6B;margin-bottom:18px;text-transform:uppercase;letter-spacing:.5px}
+.chart-wrap{position:relative;height:260px}
+
+/* TRANSACTIONS TABLE */
+.table-section{padding:24px 28px 40px}
+.table-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:gap}
+.table-title{font-size:15px;font-weight:700;color:#1B3A6B}
+.filters{display:flex;gap:10px;flex-wrap:wrap}
+.filter-select,.search-input{border:1px solid #d0d8e8;border-radius:8px;padding:8px 12px;font-size:13px;color:#333;background:#fff;outline:none}
+.filter-select:focus,.search-input:focus{border-color:#2E5FA3}
+.search-input{min-width:200px}
+.table-wrap{overflow-x:auto;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:13px}
+thead tr{background:#1B3A6B;color:#fff}
+thead th{padding:12px 14px;text-align:left;font-weight:600;white-space:nowrap}
+tbody tr:nth-child(even){background:#f7f9fc}
+tbody tr:hover{background:#eef3fb}
+tbody td{padding:10px 14px;border-bottom:1px solid #eee;vertical-align:middle}
+.mis-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:#D6E4F7;color:#1B3A6B;white-space:nowrap}
+.mis-badge.review{background:#FFF3CD;color:#856404}
+.dr{color:#C0392B;font-weight:700}
+.cr{color:#1A7A4A;font-weight:700}
+.empty-state{text-align:center;padding:60px 20px;color:#aaa}
+.empty-icon{font-size:48px;margin-bottom:12px}
+
+/* EMPTY DASHBOARD */
+.welcome{text-align:center;padding:60px 28px}
+.welcome h2{font-size:22px;color:#1B3A6B;margin-bottom:10px}
+.welcome p{color:#888;font-size:14px}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:#1B3A6B;color:#fff;padding:14px 22px;border-radius:10px;font-size:14px;opacity:0;transition:.3s;z-index:999;max-width:340px}
+.toast.show{opacity:1}
+.toast.error{background:#C0392B}
+
+/* CLEAR BTN */
+.btn-clear{background:#fff;color:#C0392B;border:1px solid #C0392B;padding:8px 18px;border-radius:8px;font-size:13px;cursor:pointer;font-weight:600}
+.btn-clear:hover{background:#fff0f0}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">Fanbuff <span>Finance</span> Dashboard</div>
+  <div class="nav-actions">
+    <span class="nav-file-count" id="fileCount"></span>
+    <button class="btn-clear" onclick="clearData()">Clear All</button>
+  </div>
+</nav>
+
+<!-- UPLOAD -->
+<div class="upload-section">
+  <div class="drop-zone" id="dropZone">
+    <input type="file" id="fileInput" accept=".pdf" multiple onchange="handleFiles(this.files)"/>
+    <div class="drop-icon">📄</div>
+    <div class="drop-text">Drop bank statement PDFs here</div>
+    <div class="drop-sub">YES Bank, Kotak, ICICI, RBL, SVB — any bank | Multiple files supported</div>
+    <button class="upload-btn" onclick="document.getElementById('fileInput').click();event.stopPropagation()">Choose PDFs</button>
+    <div class="upload-status" id="uploadStatus"></div>
+  </div>
+</div>
+
+<!-- KPIs -->
+<div class="kpi-grid" id="kpiGrid" style="display:none">
+  <div class="kpi red">
+    <div class="kpi-label">Total Cash Burn</div>
+    <div class="kpi-value" id="kpiburn">—</div>
+    <div class="kpi-sub">Operational spend only</div>
+  </div>
+  <div class="kpi green">
+    <div class="kpi-label">Total Inflows</div>
+    <div class="kpi-value" id="kpiinflow">—</div>
+    <div class="kpi-sub">Credits received</div>
+  </div>
+  <div class="kpi" id="kpiNetCard">
+    <div class="kpi-label">Net Position</div>
+    <div class="kpi-value" id="kpinet">—</div>
+    <div class="kpi-sub">Inflows − Burn</div>
+  </div>
+  <div class="kpi orange">
+    <div class="kpi-label">Transactions</div>
+    <div class="kpi-value" id="kpitxn">—</div>
+    <div class="kpi-sub" id="kpireview">0 need review</div>
+  </div>
+</div>
+
+<!-- CHARTS -->
+<div class="charts-grid" id="chartsGrid" style="display:none">
+  <div class="card">
+    <div class="card-title">Burn by MIS Head</div>
+    <div class="chart-wrap"><canvas id="chartHead"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Monthly Cash Burn Trend</div>
+    <div class="chart-wrap"><canvas id="chartMonth"></canvas></div>
+  </div>
+</div>
+
+<!-- TRANSACTIONS -->
+<div class="table-section" id="tableSection" style="display:none">
+  <div class="table-header">
+    <div class="table-title">All Transactions</div>
+    <div class="filters">
+      <input class="search-input" type="text" id="searchInput" placeholder="Search vendor, bank..." oninput="loadTxns()"/>
+      <select class="filter-select" id="filterMis" onchange="loadTxns()"><option value="">All MIS Heads</option></select>
+      <select class="filter-select" id="filterMonth" onchange="loadTxns()"><option value="">All Months</option></select>
+      <select class="filter-select" id="filterDrCr" onchange="loadTxns()">
+        <option value="">Dr + Cr</option>
+        <option value="Dr">Debits only</option>
+        <option value="Cr">Credits only</option>
+      </select>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Bank / Account</th>
+          <th>Company</th>
+          <th>Particulars</th>
+          <th>MIS Head</th>
+          <th>Dr/Cr</th>
+          <th style="text-align:right">Amount (₹)</th>
+        </tr>
+      </thead>
+      <tbody id="txnBody"></tbody>
+    </table>
+  </div>
+  <div id="txnCount" style="margin-top:10px;font-size:13px;color:#888"></div>
+</div>
+
+<!-- WELCOME (empty state) -->
+<div class="welcome" id="welcomeState">
+  <div style="font-size:60px">💰</div>
+  <h2>Upload bank statement PDFs to begin</h2>
+  <p>Company, bank, and MIS heads are auto-detected.<br/>No manual entry needed.</p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const fmt = v => '₹' + Math.abs(v).toLocaleString('en-IN', {minimumFractionDigits:0, maximumFractionDigits:0});
+let chartHead = null, chartMonth = null;
+let summaryData = null;
+
+// ── DRAG & DROP ──────────────────────────────────────────────────────────────
+const dz = document.getElementById('dropZone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('over'));
+dz.addEventListener('drop', e => {
+  e.preventDefault(); dz.classList.remove('over');
+  handleFiles(e.dataTransfer.files);
+});
+
+function handleFiles(files) {
+  if (!files.length) return;
+  const fd = new FormData();
+  Array.from(files).forEach(f => fd.append('pdfs', f));
+  document.getElementById('uploadStatus').textContent = `⏳ Processing ${files.length} file(s)...`;
+  fetch('/upload', { method:'POST', body:fd })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { showToast(data.error, true); return; }
+      const msg = data.uploaded.map(u =>
+        u.error ? `❌ ${u.name}: ${u.error}` : `✅ ${u.name} — ${u.count} transactions`
+      ).join(' | ');
+      document.getElementById('uploadStatus').textContent = msg;
+      showToast(`Loaded ${data.total} transactions total`);
+      refreshDashboard();
+    })
+    .catch(() => showToast('Upload failed', true));
+}
+
+// ── DASHBOARD ────────────────────────────────────────────────────────────────
+function refreshDashboard() {
+  fetch('/api/summary').then(r => r.json()).then(data => {
+    if (!data.total_burn && !data.total_inflow && !data.txn_count) return;
+    summaryData = data;
+
+    document.getElementById('welcomeState').style.display = 'none';
+    document.getElementById('kpiGrid').style.display = '';
+    document.getElementById('chartsGrid').style.display = '';
+    document.getElementById('tableSection').style.display = '';
+
+    document.getElementById('kpiburn').textContent   = fmt(data.total_burn);
+    document.getElementById('kpiinflow').textContent = fmt(data.total_inflow);
+    document.getElementById('kpinet').textContent    = (data.net_position < 0 ? '−' : '') + fmt(data.net_position);
+    document.getElementById('kpitxn').textContent    = data.txn_count;
+    document.getElementById('kpireview').textContent = data.review_count + ' need review';
+    document.getElementById('fileCount').textContent = (data.files||[]).length + ' file(s) loaded';
+
+    const netCard = document.getElementById('kpiNetCard');
+    netCard.className = 'kpi ' + (data.net_position >= 0 ? 'green' : 'red');
+
+    // Charts
+    buildHeadChart(data.by_head);
+    buildMonthChart(data.by_month);
+
+    // Populate filter dropdowns
+    const misEl = document.getElementById('filterMis');
+    const monthEl = document.getElementById('filterMonth');
+    const prevMis = misEl.value, prevMonth = monthEl.value;
+    misEl.innerHTML = '<option value="">All MIS Heads</option>' +
+      Object.keys(data.by_head).map(h => `<option value="${h}">${h}</option>`).join('');
+    monthEl.innerHTML = '<option value="">All Months</option>' +
+      Object.keys(data.by_month).map(m => `<option value="${m}">${m}</option>`).join('');
+    misEl.value = prevMis; monthEl.value = prevMonth;
+
+    loadTxns();
+  });
+}
+
+// ── CHARTS ───────────────────────────────────────────────────────────────────
+const PALETTE = [
+  '#1B3A6B','#2E5FA3','#E8A020','#1A7A4A','#C0392B',
+  '#8B5CF6','#0891B2','#D97706','#065F46','#9F1239',
+  '#3B82F6','#F59E0B','#10B981','#EF4444','#6366F1'
+];
+
+function buildHeadChart(byHead) {
+  const labels = Object.keys(byHead);
+  const values = Object.values(byHead);
+  if (chartHead) chartHead.destroy();
+  chartHead = new Chart(document.getElementById('chartHead'), {
+    type: 'doughnut',
+    data: { labels, datasets:[{ data:values, backgroundColor:PALETTE, borderWidth:2, borderColor:'#fff' }] },
+    options: {
+      plugins: {
+        legend: { position:'right', labels:{ font:{size:11}, padding:12, boxWidth:12 } },
+        tooltip: { callbacks: { label: ctx => ' ' + ctx.label + ': ' + fmt(ctx.raw) } }
+      },
+      cutout: '60%', maintainAspectRatio: false
+    }
+  });
+}
+
+function buildMonthChart(byMonth) {
+  const labels = Object.keys(byMonth);
+  const values = Object.values(byMonth);
+  if (chartMonth) chartMonth.destroy();
+  chartMonth = new Chart(document.getElementById('chartMonth'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets:[{
+        label:'Cash Burn (₹)',
+        data: values,
+        backgroundColor: '#2E5FA3',
+        borderRadius: 6,
+        hoverBackgroundColor: '#E8A020'
+      }]
+    },
+    options: {
+      plugins: { legend:{display:false}, tooltip:{ callbacks:{ label: ctx => ' ₹' + ctx.raw.toLocaleString('en-IN') } } },
+      scales: {
+        y: { ticks:{ callback: v => '₹' + (v/100000).toFixed(1)+'L' }, grid:{color:'#f0f4f8'} },
+        x: { grid:{display:false} }
+      },
+      maintainAspectRatio: false
+    }
+  });
+}
+
+// ── TRANSACTIONS TABLE ────────────────────────────────────────────────────────
+function loadTxns() {
+  const mis   = document.getElementById('filterMis').value;
+  const month = document.getElementById('filterMonth').value;
+  const drCr  = document.getElementById('filterDrCr').value;
+  const q     = document.getElementById('searchInput').value;
+  const params = new URLSearchParams({ mis, month, dr_cr:drCr, q });
+
+  fetch('/api/transactions?' + params).then(r => r.json()).then(data => {
+    const tbody = document.getElementById('txnBody');
+    document.getElementById('txnCount').textContent = `Showing ${data.total} transactions`;
+
+    if (!data.data.length) {
+      tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">🔍</div>No transactions match your filter</div></td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = data.data.map((t, i) => `
+      <tr>
+        <td style="white-space:nowrap">${t.date}</td>
+        <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${t.bank}">${t.bank}</td>
+        <td style="white-space:nowrap">${t.company}</td>
+        <td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${t.particulars}">${t.particulars}</td>
+        <td>
+          <span class="mis-badge ${t.mis_head.includes('REVIEW') ? 'review' : ''}"
+                title="${t.mis_head}">${t.mis_head}</span>
+        </td>
+        <td><span class="${t.dr_cr === 'Dr' ? 'dr' : 'cr'}">${t.dr_cr}</span></td>
+        <td style="text-align:right;font-weight:600" class="${t.dr_cr === 'Dr' ? 'dr' : 'cr'}">
+          ${t.amount.toLocaleString('en-IN', {minimumFractionDigits:2})}
+        </td>
+      </tr>
+    `).join('');
+  });
+}
+
+// ── CLEAR ────────────────────────────────────────────────────────────────────
+function clearData() {
+  if (!confirm('Clear all loaded transactions?')) return;
+  fetch('/clear', {method:'POST'}).then(() => {
+    STORE = {transactions:[], files:[]};
+    document.getElementById('welcomeState').style.display = '';
+    document.getElementById('kpiGrid').style.display = 'none';
+    document.getElementById('chartsGrid').style.display = 'none';
+    document.getElementById('tableSection').style.display = 'none';
+    document.getElementById('uploadStatus').textContent = '';
+    document.getElementById('fileCount').textContent = '';
+    showToast('Cleared');
+  });
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+function showToast(msg, isErr=false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isErr ? ' error' : '');
+  setTimeout(() => t.className = 'toast', 3000);
+}
+</script>
+</body>
+</html>
