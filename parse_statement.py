@@ -28,6 +28,12 @@ OUT_FILE   = os.path.join(BASE_DIR, f"Parsed_Transactions_{TODAY.strftime('%d-%b
 with open(RULES_FILE) as f:
     rules = json.load(f)
 
+CARD_CONFIG_FILE = os.path.join(BASE_DIR, "card_config.json")
+CARD_MAPPING = {}
+if os.path.exists(CARD_CONFIG_FILE):
+    with open(CARD_CONFIG_FILE) as f:
+        CARD_MAPPING = json.load(f).get("card_mapping", {})
+
 KEYWORD_RULES  = rules["keyword_rules"]
 EXCLUDE_HEADS  = rules["exclude_from_burn"]
 SKIP_PATTERNS  = [re.compile(p, re.IGNORECASE) for p in rules.get("skip_line_patterns", [])]
@@ -243,6 +249,13 @@ def parse_pdf(pdf_path):
     bank      = detect_bank(full_text)
     company   = detect_company(full_text)
     account   = detect_account(full_text)
+
+    # Resolve masked card number to full card number using card_config.json
+    full_card = CARD_MAPPING.get(account, account)
+
+    # Format: "YES Bank Credit Card - Credit Card No.5532044030045136"
+    if account:
+        bank = f"{bank} - Credit Card No.{full_card}"
 
     print(f"   Bank    : {bank}")
     print(f"   Company : {company}")

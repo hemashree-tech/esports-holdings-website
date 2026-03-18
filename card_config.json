@@ -1,0 +1,8 @@
+{
+  "card_mapping": {
+    "5532XXXXXXXX5136": "5532044030045136",
+    "5532XXXXXXXX5237": "5532044030025237",
+    "4864XXXXXXXX4009": "4864105525604009"
+  },
+  "_note": "Add your YES Bank / Kotak card numbers here. Key = masked number from PDF, Value = full card number."
+}
