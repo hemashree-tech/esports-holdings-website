@@ -3,77 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Esports Holdings Inc — Next-Level AI Experiences</title>
+  <title>Esports Holdings Inc</title>
   <style>
-    :root {
-      --primary: #0066ff;
-      --accent: #7b2ff7;
-      --bg: #ffffff;
-      --bg2: #f4f7fc;
-      --bg3: #eaf0fb;
-      --text: #0d1526;
-      --muted: #5a6a85;
-      --border: rgba(0,0,0,0.08);
-      --gradient: linear-gradient(135deg, #0066ff, #7b2ff7);
-    }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #fff;
+      color: #0d1526;
     }
 
-    /* ─── NAV ─── */
+    /* NAV */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 1rem 6%;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      align-items: center;
+      padding: 1.5rem 6%;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      z-index: 10;
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #0d1526;
       text-decoration: none;
     }
 
-    .logo-icon {
-      width: 38px; height: 38px;
-      background: var(--gradient);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      font-weight: 900;
-      color: #fff;
-    }
-
-    .logo-text {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.2;
-    }
-
-    .logo-sub {
-      font-size: 0.65rem;
-      color: var(--muted);
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+    .logo span {
+      background: linear-gradient(135deg, #0066ff, #7b2ff7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .nav-links {
@@ -83,488 +48,264 @@
     }
 
     .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 500;
+      color: #5a6a85;
+      text-decoration: none;
       transition: color 0.2s;
     }
 
-    .nav-links a:hover { color: var(--primary); }
+    .nav-links a:hover { color: #0066ff; }
 
-    .nav-cta {
-      background: var(--gradient);
-      color: #fff !important;
-      padding: 0.5rem 1.2rem;
-      border-radius: 6px;
-      font-weight: 600 !important;
+    .nav-links a.cta {
+      color: #0066ff;
+      font-weight: 700;
     }
 
-    /* ─── HERO ─── */
+    /* HERO */
     .hero {
-      min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 6rem 6% 4rem;
-      position: relative;
-      overflow: hidden;
-      background: var(--bg);
+      padding: 7rem 6% 6rem;
     }
 
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 20%, rgba(0, 102, 255, 0.07) 0%, transparent 70%),
-        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(123, 47, 247, 0.06) 0%, transparent 60%);
-    }
-
-    .hero-grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(0, 102, 255, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 102, 255, 0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-
-    .hero-content { position: relative; z-index: 1; max-width: 900px; }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
+    .tag {
+      display: inline-block;
       background: rgba(0, 102, 255, 0.07);
-      border: 1px solid rgba(0, 102, 255, 0.2);
-      border-radius: 50px;
-      padding: 0.4rem 1rem;
-      font-size: 0.8rem;
-      color: var(--primary);
-      font-weight: 600;
-      letter-spacing: 0.05em;
+      color: #0066ff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-bottom: 1.8rem;
-    }
-
-    .badge-dot {
-      width: 6px; height: 6px;
-      background: var(--primary);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(1.4); }
+      padding: 0.35rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 2rem;
     }
 
     .hero h1 {
-      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-size: clamp(2.5rem, 6vw, 5rem);
       font-weight: 900;
       line-height: 1.1;
-      margin-bottom: 1.2rem;
-      letter-spacing: -0.02em;
-      color: var(--text);
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
     }
 
-    .gradient-text {
-      background: var(--gradient);
+    .hero h1 span {
+      background: linear-gradient(135deg, #0066ff, #7b2ff7);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
     .hero p {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: var(--muted);
-      max-width: 640px;
-      margin: 0 auto 2.5rem;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      background: var(--gradient);
-      color: #fff;
-      padding: 0.85rem 2rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 700;
-      text-decoration: none;
-      transition: opacity 0.2s, transform 0.2s;
-      border: none;
-      cursor: pointer;
-    }
-
-    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text);
-      padding: 0.85rem 2rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .btn-secondary:hover { border-color: var(--primary); transform: translateY(-2px); }
-
-    /* ─── STATS ─── */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .stat-item {
-      background: var(--bg);
-      padding: 2.5rem 2rem;
-      text-align: center;
-    }
-
-    .stat-num {
-      font-size: 2.8rem;
-      font-weight: 900;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1;
-    }
-
-    .stat-label {
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-top: 0.4rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 500;
-    }
-
-    /* ─── SECTIONS ─── */
-    section { padding: 6rem 6%; }
-
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--primary);
-      margin-bottom: 0.8rem;
-    }
-
-    .section-title {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 900;
-      line-height: 1.15;
-      margin-bottom: 1rem;
-      letter-spacing: -0.02em;
-      color: var(--text);
-    }
-
-    .section-sub {
-      color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 580px;
-    }
-
-    .section-header { margin-bottom: 3.5rem; }
-
-    /* ─── FEATURES ─── */
-    .features-bg { background: var(--bg2); }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .feature-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem;
-      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    }
-
-    .feature-card:hover {
-      border-color: rgba(0, 102, 255, 0.3);
-      transform: translateY(-4px);
-      box-shadow: 0 8px 30px rgba(0, 102, 255, 0.08);
-    }
-
-    .feature-icon {
-      width: 52px; height: 52px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .icon-blue   { background: rgba(0, 102, 255, 0.08); }
-    .icon-purple { background: rgba(123, 47, 247, 0.08); }
-    .icon-green  { background: rgba(0, 180, 100, 0.08); }
-    .icon-orange { background: rgba(255, 140, 0, 0.08); }
-    .icon-pink   { background: rgba(220, 0, 100, 0.07); }
-    .icon-yellow { background: rgba(220, 170, 0, 0.08); }
-
-    .feature-card h3 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-      color: var(--text);
-    }
-
-    .feature-card p {
-      color: var(--muted);
-      font-size: 0.92rem;
-      line-height: 1.65;
-    }
-
-    /* ─── AI PLATFORM ─── */
-    .ai-section { background: var(--bg2); }
-
-    .ai-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
-    }
-
-    @media (max-width: 768px) {
-      .ai-layout { grid-template-columns: 1fr; gap: 3rem; }
-    }
-
-    .ai-features { display: flex; flex-direction: column; gap: 1.5rem; }
-
-    .ai-feature {
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-    }
-
-    .ai-feature-num {
-      width: 36px; height: 36px;
-      border-radius: 8px;
-      background: var(--gradient);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-weight: 800;
-      flex-shrink: 0;
-      color: #fff;
-    }
-
-    .ai-feature h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; color: var(--text); }
-    .ai-feature p  { color: var(--muted); font-size: 0.9rem; }
-
-    .ai-visual {
-      background: #0d1526;
-      border: 1px solid rgba(0, 102, 255, 0.2);
-      border-radius: 20px;
-      padding: 2rem;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
-    }
-
-    .ai-visual::before {
-      content: '';
-      position: absolute;
-      top: -50%; left: -50%;
-      width: 200%; height: 200%;
-      background: radial-gradient(ellipse at center, rgba(0, 102, 255, 0.08) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .terminal {
-      background: #040810;
-      border-radius: 12px;
-      padding: 1.5rem;
-      font-family: 'Courier New', monospace;
-      font-size: 0.82rem;
-      line-height: 1.8;
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .terminal-header { display: flex; gap: 0.4rem; margin-bottom: 1rem; }
-    .dot { width: 10px; height: 10px; border-radius: 50%; }
-    .dot-red    { background: #ff5f56; }
-    .dot-yellow { background: #ffbd2e; }
-    .dot-green  { background: #27c93f; }
-
-    .t-line      { display: flex; gap: 0.6rem; }
-    .t-prompt    { color: #7b2ff7; }
-    .t-cmd       { color: #4d9fff; }
-    .t-output    { color: #8a9bb8; padding-left: 1.2rem; }
-    .t-success   { color: #27c93f; }
-    .t-highlight { color: #ffbd2e; }
-
-    .blink {
-      display: inline-block;
-      width: 8px; height: 1em;
-      background: #4d9fff;
-      animation: blink 1s step-end infinite;
-      vertical-align: text-bottom;
-    }
-
-    @keyframes blink { 50% { opacity: 0; } }
-
-    /* ─── ABOUT ─── */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
-    }
-
-    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; gap: 3rem; } }
-
-    .about-values {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-
-    .value-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.2rem;
-    }
-
-    .value-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; color: var(--text); }
-    .value-card p  { color: var(--muted); font-size: 0.82rem; }
-
-    .mission-card {
-      background: var(--bg2);
-      border: 1px solid rgba(0, 102, 255, 0.15);
-      border-radius: 20px;
-      padding: 2.5rem;
-      box-shadow: 0 4px 20px rgba(0, 102, 255, 0.06);
-    }
-
-    .mission-card blockquote {
-      font-size: 1.2rem;
-      font-weight: 600;
-      line-height: 1.6;
-      color: var(--text);
-      border-left: 3px solid var(--primary);
-      padding-left: 1.2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .mission-card .author       { color: var(--muted); font-size: 0.85rem; }
-    .mission-card .author strong { color: var(--text); }
-
-    /* ─── CTA ─── */
-    .cta-section {
-      text-align: center;
-      background: var(--bg2);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-section::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0, 102, 255, 0.07) 0%, transparent 70%);
-    }
-
-    .cta-content { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
-
-    .cta-section h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 900;
-      margin-bottom: 1rem;
-      color: var(--text);
-    }
-
-    .cta-section p { color: var(--muted); margin-bottom: 2rem; font-size: 1.05rem; }
-
-    /* ─── FOOTER ─── */
-    footer {
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      padding: 3rem 6%;
-    }
-
-    .footer-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 3rem;
-      flex-wrap: wrap;
+      font-size: 1.1rem;
+      color: #5a6a85;
+      max-width: 480px;
+      line-height: 1.7;
       margin-bottom: 2.5rem;
     }
 
-    .footer-brand p {
-      color: var(--muted);
-      font-size: 0.88rem;
-      margin-top: 0.8rem;
-      max-width: 280px;
+    .btn {
+      background: linear-gradient(135deg, #0066ff, #7b2ff7);
+      color: #fff;
+      padding: 0.9rem 2.2rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+      display: inline-block;
     }
 
-    .footer-links-group h4 {
-      font-size: 0.8rem;
+    .btn:hover { opacity: 0.88; transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: #0d1526;
+      padding: 0.9rem 2.2rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid #ddd;
+      transition: border-color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+
+    .btn-outline:hover { border-color: #0066ff; transform: translateY(-2px); }
+
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+
+    /* SECTIONS */
+    section {
+      padding: 5rem 6%;
+    }
+
+    section.alt { background: #f7f9fc; }
+
+    .section-label {
+      font-size: 0.72rem;
       font-weight: 700;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
+      color: #0066ff;
+      margin-bottom: 0.7rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
       margin-bottom: 1rem;
     }
 
-    .footer-links-group ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-
-    .footer-links-group a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.88rem;
-      transition: color 0.2s;
+    .section-desc {
+      font-size: 1rem;
+      color: #5a6a85;
+      max-width: 520px;
+      line-height: 1.7;
     }
 
-    .footer-links-group a:hover { color: var(--primary); }
+    .section-head { margin-bottom: 3rem; }
 
-    .footer-bottom {
-      display: flex;
-      justify-content: space-between;
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
       align-items: center;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-      flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+
+    .about-text p {
+      font-size: 1rem;
+      color: #5a6a85;
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    .about-card {
+      background: #fff;
+      border: 1px solid #e8edf5;
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 4px 24px rgba(0, 102, 255, 0.05);
+    }
+
+    .about-card p {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #0d1526;
+      line-height: 1.65;
+      border-left: 3px solid #0066ff;
+      padding-left: 1.1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-card .founder {
+      font-size: 0.82rem;
+      color: #5a6a85;
+    }
+
+    /* HOW WE HELP */
+    .help-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .help-card {
+      background: #fff;
+      border: 1px solid #e8edf5;
+      border-radius: 16px;
+      padding: 1.8rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .help-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0, 102, 255, 0.08);
+    }
+
+    .help-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .help-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .help-card p {
+      font-size: 0.88rem;
+      color: #5a6a85;
+      line-height: 1.6;
+    }
+
+    /* OUR FOCUS */
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
     }
 
-    .footer-bottom p { color: var(--muted); font-size: 0.8rem; }
+    .focus-card {
+      border: 1px solid #e8edf5;
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
 
-    .footer-badges { display: flex; gap: 0.8rem; }
+    .focus-card:hover {
+      border-color: #0066ff;
+      transform: translateY(-3px);
+    }
 
-    .badge-small {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 0.25rem 0.6rem;
-      font-size: 0.7rem;
-      color: var(--muted);
-      font-weight: 600;
+    .focus-card .icon {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .focus-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    /* CTA */
+    .cta {
+      text-align: center;
+      padding: 5rem 6%;
+      background: #f7f9fc;
+    }
+
+    .cta h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 900;
+      margin-bottom: 0.8rem;
+      letter-spacing: -0.02em;
+    }
+
+    .cta p {
+      font-size: 1rem;
+      color: #5a6a85;
+      margin-bottom: 2rem;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #eee;
     }
 
     @media (max-width: 640px) {
@@ -576,123 +317,114 @@
 
   <!-- NAV -->
   <nav>
-    <a href="#" class="logo">
-      <div class="logo-icon">E</div>
-      <div>
-        <div class="logo-text">Esports Holdings Inc</div>
-        <div class="logo-sub">AI Company</div>
-      </div>
-    </a>
+    <a href="#" class="logo">Esports <span>Holdings Inc</span></a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
-      <li><a href="#features">Platform</a></li>
-      <li><a href="#ai">AI-Powered Technology</a></li>
-      <li><a href="#contact" class="nav-cta">Get Started</a></li>
+      <li><a href="#help">How We Help</a></li>
+      <li><a href="#focus">Our Focus</a></li>
+      <li><a href="#contact" class="cta">Contact</a></li>
     </ul>
   </nav>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
-    <div class="hero-content">
-      <h1>
-        Next-Level AI Experiences
-      </h1>
-      <div class="hero-actions">
-        <a href="#features" class="btn-primary">Explore the Platform</a>
-        <a href="#about" class="btn-secondary">Learn More</a>
-      </div>
+  <div class="hero">
+    <div class="tag">Holding Company</div>
+    <h1>We <span>Invest</span> in<br/>Great Companies</h1>
+    <p>Esports Holdings Inc acquires and invests in high-growth businesses — providing capital, strategy, and long-term partnership.</p>
+    <div class="hero-btns">
+      <a href="#about" class="btn">Learn More</a>
+      <a href="#contact" class="btn-outline">Contact Us</a>
     </div>
-  </section>
-
-
-  <!-- FEATURES -->
-  <section id="features" class="features-bg">
-    <div class="section-header">
-      <div class="section-label">Platform Capabilities</div>
-      <h2 class="section-title">Everything Athletic.<br/>Powered by AI.</h2>
-      <p class="section-sub">
-        Our AI agents handle everything from live analytics to fan engagement — so you experience sports like never before.
-      </p>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon icon-blue">🤖</div>
-        <h3>Autonomous AI Agents</h3>
-        <p>Intelligent agents that monitor, analyze, and react to sporting events in real-time — across every match, race, and game worldwide.</p>
-      </div>
-    </div>
-  </section>
-
+  </div>
 
   <!-- ABOUT -->
-  <section id="about">
+  <section id="about" class="alt">
     <div class="about-grid">
-      <div>
-        <div class="section-label">About the Company</div>
-        <h2 class="section-title">The Company Behind the Future of AI</h2>
-        <p style="color:var(--muted); margin-bottom:1.2rem;">
-          Esports Holdings Inc is an AI technology company with a singular mission: to transform every sports experience on the planet through the power of artificial intelligence.
-        </p>
-        <p style="color:var(--muted);">
-          We invest in, build, and operate AI-native platforms that serve fans, athletes, broadcasters, and leagues — creating an interconnected sports intelligence ecosystem with unparalleled global reach.
-        </p>
-        <div class="about-values">
-          <div class="value-card">
-            <h4>AI-First</h4>
-            <p>Every product built with intelligence at its core.</p>
-          </div>
-        </div>
+      <div class="about-text">
+        <div class="section-label">About Us</div>
+        <h2 class="section-title">Built to Build<br/>Lasting Companies</h2>
+        <p>Esports Holdings Inc is a holding company that acquires and invests in high-growth businesses across technology, media, and beyond.</p>
+        <p>We take a long-term ownership approach — working closely alongside founders and management teams to grow and scale businesses that endure.</p>
+      </div>
+      <div class="about-card">
+        <p>"We don't just write checks. We become partners — bringing capital, expertise, and a shared commitment to building something great."</p>
+        <div class="founder">— Esports Holdings Inc, Leadership Team</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW WE HELP -->
+  <section id="help">
+    <div class="section-head">
+      <div class="section-label">How We Help</div>
+      <h2 class="section-title">More Than Capital</h2>
+      <p class="section-desc">We bring hands-on support to every company we invest in.</p>
+    </div>
+    <div class="help-grid">
+      <div class="help-card">
+        <div class="help-icon">💰</div>
+        <h3>Capital</h3>
+        <p>Flexible investment structures tailored to where your business is today and where it's going.</p>
+      </div>
+      <div class="help-card">
+        <div class="help-icon">🧭</div>
+        <h3>Strategy</h3>
+        <p>Hands-on guidance on growth, market positioning, and long-term business planning.</p>
+      </div>
+      <div class="help-card">
+        <div class="help-icon">🤝</div>
+        <h3>Network</h3>
+        <p>Access to our network of operators, investors, and industry leaders to open doors.</p>
+      </div>
+      <div class="help-card">
+        <div class="help-icon">⚙️</div>
+        <h3>Operations</h3>
+        <p>Support with finance, hiring, systems, and processes to help you scale efficiently.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUR FOCUS -->
+  <section id="focus" class="alt">
+    <div class="section-head">
+      <div class="section-label">Our Focus</div>
+      <h2 class="section-title">Sectors We Invest In</h2>
+      <p class="section-desc">We concentrate on industries being reshaped by technology and innovation.</p>
+    </div>
+    <div class="focus-grid">
+      <div class="focus-card">
+        <div class="icon">🤖</div>
+        <h3>AI & Technology</h3>
+      </div>
+      <div class="focus-card">
+        <div class="icon">🎮</div>
+        <h3>Gaming & Esports</h3>
+      </div>
+      <div class="focus-card">
+        <div class="icon">💳</div>
+        <h3>Fintech</h3>
+      </div>
+      <div class="focus-card">
+        <div class="icon">📱</div>
+        <h3>Digital Media</h3>
+      </div>
+      <div class="focus-card">
+        <div class="icon">🏥</div>
+        <h3>Health & Wellness</h3>
       </div>
     </div>
   </section>
 
   <!-- CTA -->
-  <section id="contact" class="cta-section">
-    <div class="cta-content">
-      <div class="section-label">Get Started</div>
-      <p>Join the next generation of sports intelligence. Partner with Esports Holdings Inc and bring AI-powered experiences to your fans, athletes, or platform.</p>
-      <div class="hero-actions">
-        <a href="mailto:contact@esportsholdings.com" class="btn-primary">Contact Us</a>
-        <a href="#features" class="btn-secondary">Learn More</a>
-      </div>
-    </div>
+  <section id="contact" class="cta">
+    <h2>Let's Build Together</h2>
+    <p>Founder, operator, or co-investor — we'd love to hear from you.</p>
+    <a href="mailto:contact@esportsholdings.com" class="btn">Get In Touch</a>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a href="#" class="logo" style="text-decoration:none;">
-          <div class="logo-icon">E</div>
-          <div>
-            <div class="logo-text">Esports Holdings Inc</div>
-            <div class="logo-sub">AI Company</div>
-          </div>
-        </a>
-        <p>Next-Level Play, Powered by AI Agents. One Intelligent Platform.</p>
-      </div>
-      <div class="footer-links-group">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#features">Platform</a></li>
-        </ul>
-      </div>
-      <div class="footer-links-group">
-        <h4>Contact</h4>
-        <ul>
-          <li><a href="mailto:contact@esportsholdings.com">contact@esportsholdings.com</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 Esports Holdings Inc. All rights reserved.</p>
-      <div class="footer-badges">
-        <span class="badge-small">AI-Powered</span>
-      </div>
-    </div>
+    &copy; 2026 Esports Holdings Inc. All rights reserved.
   </footer>
 
 </body>
